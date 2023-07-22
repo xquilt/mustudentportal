@@ -1,10 +1,16 @@
-# Mu Student Portal
+# MU Student Portal
 
-The revamped open-source ported Android application of [Student Portal](https://play.google.com/store/apps/details?id=eg.edu.mans.mustudentportal) application.
+The revamped open-source ported version of the [Student Portal](https://play.google.com/store/apps/details?id=eg.edu.mans.mustudentportal) Android application.
+
+## Showcase
+<span>
+    <img src="./media/LoginPage.jpg" width="300" height="600"> &nbsp;
+    <img src="./media/univerisitiesList.jpg" width="300" height="600"> &nbsp;
+</span>
 
 ## Installation
 
-Git clone the project then build it, or install the bundled APK file from the releases [section](https://github.com/z0xyz/mustudentportal/releases).
+Git clone the project then build it, or install the bundled APK file from the [releases section](https://github.com/z0xyz/mustudentportal/releases).
 
 ## Contributing
 
