@@ -22,9 +22,19 @@ fun MainLogin() {
     var selectedUniversity: University by remember { mutableStateOf(University(String(), String(), String(), String())) }
     var creditHourChecked by remember { mutableStateOf(false) }
     var academicYearChecked by remember { mutableStateOf(false) }
+    var passwordVisibility by remember { mutableStateOf(true) }
+    var userName by remember { mutableStateOf(String()) }
+    var userPassword by remember { mutableStateOf(String()) }
+    var universitySearchBarQuery by remember { mutableStateOf(String()) }
     LoginPage(
-        onUserNameChange = {},
-        onUserPasswordChange = {},
+        userName = userName,
+        onUserNameChange = {
+            userName = it
+        },
+        userPassword = userPassword,
+        onUserPasswordChange = {
+            userPassword = it
+        },
         onSignIn = { /*TODO*/ },
         academicYearEnabled = selectedUniversity.academicYear.isNotEmpty(),
         academicYearChecked = academicYearChecked,
@@ -43,13 +53,20 @@ fun MainLogin() {
             coroutineScope.launch {
                 bottomSheetState.show()
             }
+        },
+        passwordVisibility = passwordVisibility,
+        passwordImageVectorOnClick = {
+            passwordVisibility = !passwordVisibility
         }
     )
     if (openBottomSheet) {
         UniversitiesBottomSheet(
             bottomSheetState = bottomSheetState,
             universities = univerisities,
-            onQueryChange = {},
+            universitySearchBarQuery = universitySearchBarQuery,
+            onUniversityQueryChange = {
+                universitySearchBarQuery = it
+            },
             onSearch = {},
             selectedUniversity = selectedUniversity,
             onSelectingUniversity = {

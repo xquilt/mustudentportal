@@ -5,7 +5,7 @@ The revamped open-source ported version of the [Student Portal](https://play.goo
 ## Showcase
 <span>
     <img src="./media/LoginPage.jpg" width="300" height="600"> &nbsp;
-    <img src="./media/univerisitiesList.jpg" width="300" height="600"> &nbsp;
+    <img src="./media/universitiesList.jpg" width="300" height="600"> &nbsp;
 </span>
 
 ## Installation
@@ -19,4 +19,4 @@ to discuss what you would like to change.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](./LICENSE)

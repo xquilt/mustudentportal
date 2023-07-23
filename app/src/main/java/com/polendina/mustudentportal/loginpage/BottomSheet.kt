@@ -1,6 +1,5 @@
 package com.polendina.mustudentportal.loginpage
 
-import android.provider.CalendarContract
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,6 +26,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +43,8 @@ import com.polendina.mustudentportal.R
 fun UniversitiesBottomSheet(
     bottomSheetState: SheetState,
     universities: List<University>,
-    onQueryChange: (newQuery: String) -> Unit,
+    universitySearchBarQuery: String,
+    onUniversityQueryChange: (newQuery: String) -> Unit,
     onSearch: (String) -> Unit,
     onDismissRequest: () -> Unit,
     selectedUniversity: University,
@@ -64,8 +68,11 @@ fun UniversitiesBottomSheet(
                     .height(70.dp)
             ) {
                 SearchBar(
-                    query = stringResource(id = R.string.university_search),
-                    onQueryChange = onQueryChange,
+                    query = universitySearchBarQuery,
+                    placeholder = {
+                        Text(text = stringResource(id = R.string.university_search))
+                    },
+                    onQueryChange = onUniversityQueryChange,
                     onSearch = onSearch,
                     active = true,
                     onActiveChange = {},
@@ -96,10 +103,22 @@ fun UniversitiesBottomSheet(
                                 .padding(vertical = 10.dp)
                                 .clickable { onSelectingUniversity(it) }
                         ) {
+                            Icon(
+                                imageVector = Icons.Filled.CheckCircle,
+                                contentDescription = null,
+                                tint = if (selectedUniversity == it) Color.White else Color.Transparent,
+                                modifier = Modifier
+                                    .padding(
+                                        start = 10.dp,
+                                        top = 10.dp,
+                                        end = 10.dp,
+                                        bottom = 0.dp
+                                    )
+                            )
                             Text(
                                 text = it.name,
                                 modifier = Modifier
-                                    .align(Alignment.End)
+                                    .align(Alignment.CenterHorizontally)
                             )
                         }
                     }
@@ -120,7 +139,8 @@ private fun UniversitiesBottomSheetPreview() {
         UniversitiesBottomSheet(
             bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false),
             universities = univerisities,
-            onQueryChange = {},
+            universitySearchBarQuery = "",
+            onUniversityQueryChange = {},
             onSearch = {},
             onDismissRequest = {},
             selectedUniversity = univerisities[1],
