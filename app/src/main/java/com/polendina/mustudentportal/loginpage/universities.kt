@@ -7,7 +7,7 @@ data class University(
     val creditHour: String,
 )
 
-val univerisities = listOf<University>(
+val universities = listOf<University>(
     University(name = "جامعة المنصورة", portal = "http://stdportal.mans.edu.eg", academicYear = "http://credit.mans.edu.eg", creditHour = ""),
     University(name = "جامعة دمياط", portal = "http://stdportal.mans.edu.eg", academicYear = "http://credit.mans.edu.eg", creditHour = ""),
     University(name = " مصر العالى للتجارة والحاسبات بالمنصورة", portal =  "http://stdportal.mans.edu.eg", academicYear = "http://credit.mans.edu.eg", creditHour = ""),
