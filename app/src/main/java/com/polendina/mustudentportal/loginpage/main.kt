@@ -14,12 +14,15 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.polendina.mustudentportal.ui.theme.MUStudentPortalTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainLogin() {
+fun MainLogin(
+    navController: NavController?
+) {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val coroutineScope = rememberCoroutineScope()
@@ -116,6 +119,8 @@ fun MainLogin() {
 @Composable
 fun PreviewMainLogin() {
     MUStudentPortalTheme() {
-        MainLogin()
+        MainLogin(
+            navController = null
+        )
     }
 }
