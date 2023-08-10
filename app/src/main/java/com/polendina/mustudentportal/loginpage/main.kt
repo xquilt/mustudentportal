@@ -1,6 +1,5 @@
 package com.polendina.mustudentportal.loginpage
 
-import android.widget.Toast
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -8,12 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.polendina.mustudentportal.ui.theme.MUStudentPortalTheme
 import kotlinx.coroutines.launch
@@ -21,56 +20,48 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainLogin(
-    navController: NavController?
+    navController: NavController?,
+    loginViewModel: LoginViewModel = viewModel()
 ) {
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+
     val coroutineScope = rememberCoroutineScope()
-    var selectedUniversity: University by remember { mutableStateOf(University(String(), String(), String(), String())) }
-    var creditHourChecked by remember { mutableStateOf(false) }
-    var academicYearChecked by remember { mutableStateOf(false) }
-    var passwordVisibility by remember { mutableStateOf(true) }
-    var userName by remember { mutableStateOf(String()) }
-    var userPassword by remember { mutableStateOf(String()) }
-    var universitySearchBarQuery by remember { mutableStateOf(String()) }
-    var searchBarActive by remember { mutableStateOf(false) }
-    var universitiesList by remember { mutableStateOf(universities) }
-    var universitiesLoaded by remember { mutableStateOf(true) }
-    val nationalIdFocusRequester = remember { FocusRequester() }
-    val passwordFocusRequester = remember { FocusRequester() }
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val focusManager = LocalFocusManager.current
+    val nationalIdFocusRequester by remember { mutableStateOf (FocusRequester()) }
+    val passwordFocusRequester by remember { mutableStateOf(FocusRequester()) }
     val context = LocalContext.current
+
     LoginPage(
-        userName = userName,
+        userName = loginViewModel.userName,
         onUserNameChange = {
-            userName = it
+            loginViewModel.userName = it
         },
-        userPassword = userPassword,
+        userPassword = loginViewModel.userPassword,
         onUserPasswordChange = {
-            userPassword = it
+            loginViewModel.userPassword = it
         },
         onSignIn = { /*TODO*/ },
-        academicYearEnabled = selectedUniversity.academicYear.isNotEmpty(),
-        academicYearChecked = academicYearChecked,
-        creditHourEnabled = selectedUniversity.creditHour.isNotEmpty(),
-        creditHourChecked = creditHourChecked,
+        academicYearEnabled = loginViewModel.selectedUniversity.academicYear.isNotEmpty(),
+        academicYearChecked = loginViewModel.academicYearChecked,
+        creditHourEnabled = loginViewModel.selectedUniversity.creditHour.isNotEmpty(),
+        creditHourChecked = loginViewModel.creditHourChecked,
         onAcademicYearRadioButtonClicked = {
-            academicYearChecked = !academicYearChecked
-            if (creditHourChecked) { creditHourChecked = false }
+            loginViewModel.academicYearChecked = !loginViewModel.academicYearChecked
+            if (loginViewModel.creditHourChecked) { loginViewModel.creditHourChecked = false }
         },
         onCreditHourRadioButtonClicked = {
-            creditHourChecked = !creditHourChecked
-            if (academicYearChecked) { academicYearChecked = false }
+            loginViewModel.creditHourChecked = !loginViewModel.creditHourChecked
+            if (loginViewModel.academicYearChecked) { loginViewModel.academicYearChecked = false }
         },
         onSelectUniversity = {
-            openBottomSheet = true
+            loginViewModel.openBottomSheet = true
             coroutineScope.launch {
                 bottomSheetState.show()
             }
         },
-        passwordVisibility = passwordVisibility,
+        passwordVisibility = loginViewModel.passwordVisibility,
         passwordImageVectorOnClick = {
-            passwordVisibility = !passwordVisibility
+            loginViewModel.passwordVisibility = !loginViewModel.passwordVisibility
         },
         onNext = {
             passwordFocusRequester.requestFocus()
@@ -81,35 +72,35 @@ fun MainLogin(
         nationalIdFocusRequester = nationalIdFocusRequester,
         passwordFocusRequester = passwordFocusRequester
     )
-    if (openBottomSheet) {
+    if (loginViewModel.openBottomSheet) {
         UniversitiesBottomSheet(
             bottomSheetState = bottomSheetState,
-            universities = universitiesList,
-            universitySearchBarQuery = universitySearchBarQuery,
+            universities = loginViewModel.universitiesList,
+            universitySearchBarQuery = loginViewModel.universitySearchBarQuery,
             onUniversiteQueryChange = {
-                universitySearchBarQuery = it
-                universitiesList = universities
+                loginViewModel.universitySearchBarQuery = it
+                loginViewModel.universitiesList = universities
             },
             onSearch = {
-                searchBarActive = false
-                universitiesList = universitiesList.filter { university ->  university.name.contains(it) }
+                loginViewModel.searchBarActive = false
+                loginViewModel.universitiesList = loginViewModel.universitiesList.filter { university ->  university.name.contains(it) }
             },
-            selectedUniversity = selectedUniversity,
+            selectedUniversity = loginViewModel.selectedUniversity,
             onSelectingUniversity = {
-                selectedUniversity = it
-                academicYearChecked = false
-                creditHourChecked = false
+                loginViewModel.selectedUniversity = it
+                loginViewModel.academicYearChecked = false
+                loginViewModel.creditHourChecked = false
             },
             onDismissRequest = {
                 coroutineScope.launch {
                     bottomSheetState.hide()
                 }.invokeOnCompletion {
-                    openBottomSheet = false
+                    loginViewModel.openBottomSheet = false
                 }
             },
-            searchBarActive = searchBarActive,
+            searchBarActive = loginViewModel.searchBarActive,
             onSearchBarActiveChange = {
-                searchBarActive = it
+                loginViewModel.searchBarActive = it
             }
         )
     }
