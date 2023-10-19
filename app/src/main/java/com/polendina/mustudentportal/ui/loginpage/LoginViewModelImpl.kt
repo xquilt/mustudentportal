@@ -1,18 +1,14 @@
 package com.polendina.mustudentportal.loginpage
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.ViewModel
+import com.polendina.mustudentportal.ui.loginpage.LoginViewModel
 
 // todo: Extraneous explicit property accessors, and private fields is just a placeholder, till I (potentially) configure a custom implementation for them
-class LoginViewModel: ViewModel() {
+class LoginViewModelImpl: LoginViewModel, ViewModel() {
 
     private var _openBottomSheet: Boolean by mutableStateOf(false)
     private var _selectedUniversity: University by mutableStateOf(University(String(), String(), String(), String()))
@@ -23,42 +19,73 @@ class LoginViewModel: ViewModel() {
     private var _userPassword: String by mutableStateOf(String())
     private var _universitySearchBarQuery: String by mutableStateOf(String())
     private var _searchBarActive: Boolean by mutableStateOf(false)
-    private var _universitiesList: List<University> by mutableStateOf(universities)
-    private var _universitiesLoaded: Boolean by mutableStateOf(true)
+    private var _universitiesList: List<University> by mutableStateOf(emptyList())
+    private var _universitiesLoaded: Boolean by mutableStateOf(false)
 
-    var openBottomSheet
+    override var openBottomSheet
         get() = _openBottomSheet
         set(value) { _openBottomSheet = value }
 
-    var selectedUniversity
+    override var selectedUniversity
         get() = _selectedUniversity
         set(value) { _selectedUniversity = value }
-    var creditHourChecked
+    override var creditHourChecked
         get() = _creditHourChecked
         set(value) { _creditHourChecked = value }
-    var academicYearChecked
+    override var creditHourEnabled: Boolean
+        get() = selectedUniversity.creditHour.isNotEmpty()
+        set(value) {}
+    override var academicYearChecked: Boolean
         get() = _academicYearChecked
         set(value) { _academicYearChecked = value }
-    var passwordVisibility
+    override var academicYearEnabled
+        get() = selectedUniversity.academicYear.isNotEmpty()
+        set(value) {}
+    override var passwordVisibility
         get() = _passwordVisibility
         set(value) { _passwordVisibility = value }
-    var userName
+    override var userName
         get() = _userName
         set(value) { _userName = value }
-    var userPassword
+    override var userPassword
         get() = _userPassword
         set(value) { _userPassword = value }
-    var universitySearchBarQuery
+    override var universitySearchBarQuery
         get() = _universitySearchBarQuery
         set(value) { _universitySearchBarQuery = value }
-    var searchBarActive
+    override var searchBarActive
         get() = _searchBarActive
         set(value) { _searchBarActive = value }
-    var universitiesList
+    override var universitiesList
         get() = _universitiesList
         set(value) { _universitiesList = value }
-    var universitiesLoaded
+    override var universitiesLoaded
         get() = _universitiesLoaded
         set(value) { universitiesLoaded = value }
+    override var nationalIdFocusRequester: FocusRequester
+        get() = FocusRequester()
+        set(value) {}
+    override var passwordFocusRequester: FocusRequester
+        get() = FocusRequester()
+        set(value) {}
 
+    override fun onUserNameChange(newName: String) {
+        _userName = newName
+    }
+
+    override fun onUserPasswordChange(newPassword: String) {
+        _userPassword = newPassword
+    }
+    override fun onSignIn() { }
+    override fun onCreditHourRadioButtonClicked() {
+        creditHourChecked = !creditHourChecked
+        if (academicYearChecked) { academicYearChecked = false }
+    }
+    override fun onAcademicYearRadioButtonClicked() {
+        academicYearChecked = !academicYearChecked
+        if (creditHourChecked) { creditHourChecked = false }
+    }
+    override fun passwordImageVectorOnClick() {
+        passwordVisibility = !passwordVisibility
+    }
 }

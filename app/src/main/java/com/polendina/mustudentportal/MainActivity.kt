@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.polendina.mustudentportal.loginpage.MainLogin
+import com.polendina.mustudentportal.loginpage.LoginPage
+import com.polendina.mustudentportal.loginpage.LoginViewModelImpl
 import com.polendina.mustudentportal.ui.theme.MUStudentPortalTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +27,10 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "login") {
                         composable(route = "login") {
-                            MainLogin(navController = navController)
+                            LoginPage(
+                                navController = navController,
+                                loginViewModel = LoginViewModelImpl()
+                            )
                         }
                     }
                 }
