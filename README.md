@@ -2,10 +2,16 @@
 
 The revamped open-source ported version of the [Student Portal](https://play.google.com/store/apps/details?id=eg.edu.mans.mustudentportal) Android application.
 
-## Showcase
+## Light Mode
 <span>
-    <img src="./media/LoginPage.jpg" width="300" height="600"> &nbsp;
-    <img src="./media/universitiesList.jpg" width="300" height="600"> &nbsp;
+    <img src="./media/light/LoginPage.jpg" width="300" height="600"> &nbsp;
+    <img src="./media/light/universitiesList.jpg" width="300" height="600"> &nbsp;
+    <img src="./media/light/settings.png" width="300" height="600"> &nbsp;
+</span>
+
+## Dark Mode
+<span>
+    <img src="./media/darkMode/settings.png" width="300" height="600"> &nbsp;
 </span>
 
 ## Installation
