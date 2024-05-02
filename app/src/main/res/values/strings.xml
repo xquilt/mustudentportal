@@ -7,7 +7,6 @@
     <string name="select_college">Select One</string>
     <string name="credit_hour">Credit Hour</string>
     <string name="academic_year">Academic Year</string>
-    <string name="settings">Settings</string>
     <string name="university_search">University Search</string>
     <string name="account">Account</string>
     <string name="account_description">User settings, Configurations</string>
@@ -15,6 +14,13 @@
     <string name="styling_description">Theming, Colorschemes, Font, etc</string>
     <string name="configuration">Configuration</string>
     <string name="configuration_description">App Settings, Configurations</string>
-    <string name="support">Support</string>
     <string name="language">Languages</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="support">Support</string>
+    <string name="color_scheme">Color Scheme</string>
+    <string name="rewards">Rewards</string>
+    <string name="address">Address</string>
+    <string name="schedule">Schedule</string>
 </resources>
